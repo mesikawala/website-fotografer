@@ -22,3 +22,89 @@ body {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   }
 }
+
+/* 3D Canvas Styles */
+@layer components {
+  .canvas-container {
+    @apply w-full h-full rounded-lg overflow-hidden;
+    touch-action: none;
+  }
+
+  .canvas-container canvas {
+    @apply w-full h-full;
+    display: block;
+  }
+
+  /* Responsive 3D canvas sizing */
+  @media (max-width: 768px) {
+    .canvas-container {
+      height: 400px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .canvas-container {
+      height: 300px !important;
+    }
+  }
+
+  /* 3D Loading spinner */
+  .loading-spinner {
+    @apply animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500;
+  }
+
+  /* 3D Control hints */
+  .control-hint {
+    @apply text-xs opacity-70;
+    animation: fadeIn 0.3s ease-in;
+  }
+
+  /* 3D Hover effects */
+  .photo-hover-info {
+    @apply transition-all duration-300 transform;
+    animation: slideUp 0.2s ease-out;
+  }
+}
+
+/* Performance optimizations for mobile */
+@media (max-width: 768px) {
+  .canvas-container {
+    will-change: transform;
+    transform: translateZ(0);
+  }
+
+  /* Reduce particle effects on mobile */
+  .particles-mobile {
+    display: none;
+  }
+}
+
+/* Smooth animations for 3D transitions */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse3D {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .canvas-container canvas {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+  }
+}
