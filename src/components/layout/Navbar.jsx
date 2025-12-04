@@ -1,5 +1,5 @@
-import React from "react";
-import { Camera, Menu, X, Sun, Moon } from "lucide-react";
+import React, { useState } from "react";
+import { Camera, Menu, X, Sun, Moon, HelpCircle } from "lucide-react";
 
 const Navbar = ({
   darkMode,
@@ -9,6 +9,7 @@ const Navbar = ({
   menuOpen,
   setMenuOpen,
 }) => {
+  const [show3DHelp, setShow3DHelp] = useState(false);
   const navItems = ["Home", "Gallery", "About", "Services", "Contact"];
 
   return (
@@ -41,6 +42,53 @@ const Navbar = ({
                 {item}
               </a>
             ))}
+
+            {/* 3D Controls Help */}
+            <div className="relative">
+              <button
+                onClick={() => setShow3DHelp(!show3DHelp)}
+                className={`p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors ${
+                  activeSection === "gallery" ? "text-yellow-600" : ""
+                } ${darkMode ? "text-gray-300" : "text-gray-700"}`}
+                title="3D Gallery Help"
+              >
+                <HelpCircle size={20} />
+              </button>
+
+              {show3DHelp && (
+                <div className={`absolute right-0 top-12 w-64 p-4 rounded-lg shadow-lg ${
+                  darkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
+                } border ${darkMode ? "border-gray-700" : "border-gray-200"}`}>
+                  <h3 className="font-semibold mb-2">🎮 3D Gallery Controls</h3>
+                  <div className="text-sm space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs">🖱️</span>
+                      <span>Drag to rotate camera</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs">🔄</span>
+                      <span>Scroll to zoom in/out</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs">🖼️</span>
+                      <span>Click photos to view</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs">⌨️</span>
+                      <span>Arrow keys to navigate</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs">📱</span>
+                      <span>Touch gestures on mobile</span>
+                    </div>
+                  </div>
+                  <div className="mt-3 pt-2 border-t text-xs opacity-70">
+                    Go to Gallery section to enable 3D mode
+                  </div>
+                </div>
+              )}
+            </div>
+
             <button
               onClick={() => setDarkMode(!darkMode)}
               className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
